@@ -5,7 +5,7 @@ defmodule Mix.Tasks.Prepare do
   def run(_) do
     Mix.Task.run "app.start"
 
-    image_paths = Path.join(File.cwd!, "training_data/images/*.jpg")
+    image_paths = Path.join(File.cwd!, "training_data/images/baby_yoda/*.jpg")
       |> Path.wildcard
 
     Enum.each(image_paths, &Resizer.resize(&1))

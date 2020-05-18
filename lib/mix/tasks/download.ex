@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Download do
     Mix.Task.run "app.start"
 
     read_path = Path.join(File.cwd!, "training_data/BabyYodaSpider.txt")
-    write_path = Path.join(File.cwd!, "training_data/images")
+    write_path = Path.join(File.cwd!, "training_data/images/baby_yoda")
 
     Downloader.download(read_path, write_path)
   end
