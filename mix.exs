@@ -23,7 +23,7 @@ defmodule StarWarsMl.MixProject do
       {:crawly, "~> 0.9.0"},
       {:httpoison, "~> 1.5"},
       {:floki, "~> 0.26.0"},
-      {:poison, "~> 3.1"}
+      {:mogrify, "~> 0.7.3"}
     ]
   end
 end

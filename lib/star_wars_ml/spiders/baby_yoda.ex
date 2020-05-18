@@ -6,6 +6,8 @@ defmodule BabyYodaSpider do
 
   @impl Crawly.Spider
   def init() do
+    IO.puts "Baby yoda spider init"
+
     [
       start_urls: [
         "https://www.ecosia.org/images?q=baby+yoda"
@@ -17,7 +19,17 @@ defmodule BabyYodaSpider do
   def parse_item(response) do
     {:ok, document} = Floki.parse_document(response.body)
 
-    pagination_urls = document |> Floki.find("ol.pager li a") |> Floki.attribute("href")
+    pagination_urls = [
+      "/images?q=baby+yoda&p=1",
+      "/images?q=baby+yoda&p=2",
+      "/images?q=baby+yoda&p=3",
+      "/images?q=baby+yoda&p=4",
+    ]
+
+    requests =
+      pagination_urls
+      |> Enum.map(&build_absolute_url/1)
+      |> Enum.map(&Crawly.Utils.request_from_url/1)
 
     images =
       document
@@ -25,15 +37,13 @@ defmodule BabyYodaSpider do
       |> Floki.attribute("href")
       |> Enum.map(&build_image_url/1)
 
-    %{
-      :requests => [],
-      :items => [
-        %{
-          images: images
-        }
-      ]
+    %Crawly.ParsedItem{
+      :requests => requests,
+      :items => images
     }
   end
+
+  defp build_absolute_url(url), do: URI.merge(base_url(), url) |> to_string()
 
   defp build_image_url(url) do
     URI.merge("https://hniesfp.imgix.net", url) |> to_string()

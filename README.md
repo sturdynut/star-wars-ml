@@ -6,7 +6,26 @@ Just fun with machine learning using Star Wars images.
 
 Training data is stored in the `training_data` folder
 
-To gather the training data:
+### To gather the training data:
 
-- Run `mix crawl` to crawl the web for images
-- Run `mix download` to download those images
+**Gather urls for images to download**
+-  `iex -S mix`
+- `Crawly.Engine.start_spider(BabyYodaSpider)` to crawl for images
+
+**Download images to training data folder**
+
+- `mix download`
+
+**Prepare images (resizes)**
+
+- `mix prepare`
+
+## Test Setup
+
+To prepare the testing environment:
+
+- `chmod +x ./test_setup.sh; ./test_setup.sh`
+
+## Testing
+
+`mix test`
